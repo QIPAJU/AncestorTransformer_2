@@ -6,7 +6,7 @@
       "type": "shell",
       "command": "C:/Users/QinJiWei/AppData/Local/stm32cube/bundles/programmer/2.23.0/bin/STM32_Programmer_CLI.exe",
       "args": [
-        "-c", "port=swd",
+        "-c", "port=swd freq=1000",
         "-d", "${command:cmake.launchTargetPath}",
         "-v",
         "-rst"
