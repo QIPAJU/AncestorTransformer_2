@@ -125,7 +125,9 @@ int main(void)
         message = "梁圣";
     } else if (value >= 395) {
         message = "梁子";
-    } else {
+    } else if (value >= 25) {
+        message = "牢梁";
+    }else {
         message = "梁嘻皮";
     }
     
