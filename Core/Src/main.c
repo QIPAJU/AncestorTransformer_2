@@ -74,7 +74,7 @@ int main(void)
 {
 
   /* USER CODE BEGIN 1 */
-  uint16_t value = 0.0;
+  uint16_t value = 0;
   /* USER CODE END 1 */
 
   /* MCU Configuration--------------------------------------------------------*/
@@ -108,6 +108,8 @@ int main(void)
   HAL_ADCEx_Calibration_Start(&hadc1);//校准adc1
   HAL_ADC_Start(&hadc1);
   HAL_ADC_PollForConversion(&hadc1, HAL_MAX_DELAY);//等待adc1采样完成
+
+  const char *message = "";
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -115,11 +117,28 @@ int main(void)
   while (1)
   {
     value = HAL_ADC_GetValue(&hadc1);
+    if (value >= 4070) {
+        message = "梁祖";
+    } else if (value >= 3460) {
+        message = "梁神";
+    } else if (value >= 2825) {
+        message = "梁圣";
+    } else if (value >= 2190) {
+        message = "梁文峰";
+    } else if (value >= 1555) {
+        message = "梁子";
+    } else if (value >= 920) {
+        message = "牢梁";
+    } else if (value >= 250) {
+        message = "梁嘻皮";
+    } else {
+        message = "梁嘻皮";
+    }
+
 
     OLED_NewFrame();
 
-    char message[20];
-    sprintf(message, "ADC %d",value);
+    //sprintf(message, "ADC %d",value);
     OLED_PrintString(0, 0, message, &font16x16, OLED_COLOR_NORMAL);
 
     OLED_ShowFrame();
