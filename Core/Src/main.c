@@ -21,6 +21,7 @@
 #include "adc.h"
 #include "i2c.h"
 #include "gpio.h"
+#include "stm32c0xx_hal.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
@@ -28,6 +29,7 @@
 #include <string.h>
 #include <oled.h>
 #include <stdio.h>
+#include <sys/_intsup.h>
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -100,11 +102,13 @@ int main(void)
   HAL_GPIO_WritePin(LED_GPIO_Port, LED_Pin, GPIO_PIN_RESET);
   //上电点亮LED作为上电指示
 
+  HAL_ADC_Stop(&hadc1);
   HAL_ADCEx_Calibration_Start(&hadc1);//校准adc1
   HAL_ADC_Start(&hadc1);
   HAL_ADC_PollForConversion(&hadc1, HAL_MAX_DELAY);//等待adc1采样完成
 
   const char *message = "";
+  //char message1[10];
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -112,29 +116,24 @@ int main(void)
   while (1)
   {
     value = HAL_ADC_GetValue(&hadc1);
+    
     if (value >= 4070) {
         message = "梁祖";
-    } else if (value >= 3460) {
+    } else if (value >= 3730) {
         message = "梁神";
-    } else if (value >= 2825) {
+    }else if (value >= 2032) {
         message = "梁圣";
-    } else if (value >= 2190) {
-        message = "梁文峰";
-    } else if (value >= 1555) {
+    } else if (value >= 395) {
         message = "梁子";
-    } else if (value >= 920) {
-        message = "牢梁";
-    } else if (value >= 250) {
-        message = "梁嘻皮";
     } else {
         message = "梁嘻皮";
     }
-
-
+    
     OLED_NewFrame();
 
-    //sprintf(message, "ADC %d",value);
+    //sprintf(message1, "ADC %d", value);
     OLED_PrintString(0, 0, message, &font16x16, OLED_COLOR_NORMAL);
+    //OLED_PrintString(0, 20, message1, &font16x16, OLED_COLOR_NORMAL);
 
     OLED_ShowFrame();
     /* USER CODE END WHILE */
