@@ -1,0 +1,22 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Flash STM32 (CubeProg)",
+      "type": "shell",
+      "command": "C:/Users/QinJiWei/AppData/Local/stm32cube/bundles/programmer/2.23.0/bin/STM32_Programmer_CLI.exe",
+      "args": [
+        "-c", "port=swd",
+        "-d", "${command:cmake.launchTargetPath}",
+        "-v",
+        "-rst"
+      ],
+      "dependsOn": "CMake: build",
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "problemMatcher": []
+    }
+  ]
+}

@@ -19,12 +19,19 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 #include "adc.h"
+#include "dma.h"
 #include "i2c.h"
 #include "gpio.h"
+#include "stm32c0xx_hal_adc.h"
+#include "stm32c0xx_hal_adc_ex.h"
+#include "stm32c0xx_hal_def.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include <stdint.h>
+#include <string.h>
+#include <oled.h>
+#include <stdio.h>
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -67,7 +74,7 @@ int main(void)
 {
 
   /* USER CODE BEGIN 1 */
-
+  uint16_t value = 0.0;
   /* USER CODE END 1 */
 
   /* MCU Configuration--------------------------------------------------------*/
@@ -88,16 +95,34 @@ int main(void)
 
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
+  MX_DMA_Init();
   MX_ADC1_Init();
   MX_I2C1_Init();
   /* USER CODE BEGIN 2 */
+  HAL_Delay(20);
+  OLED_Init();
+  //初始化OLED
+  HAL_GPIO_WritePin(LED_GPIO_Port, LED_Pin, GPIO_PIN_RESET);
+  //上电点亮LED作为上电指示
 
+  HAL_ADCEx_Calibration_Start(&hadc1);//校准adc1
+  HAL_ADC_Start(&hadc1);
+  HAL_ADC_PollForConversion(&hadc1, HAL_MAX_DELAY);//等待adc1采样完成
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
+    value = HAL_ADC_GetValue(&hadc1);
+
+    OLED_NewFrame();
+
+    char message[20];
+    sprintf(message, "ADC %d",value);
+    OLED_PrintString(0, 0, message, &font16x16, OLED_COLOR_NORMAL);
+
+    OLED_ShowFrame();
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
