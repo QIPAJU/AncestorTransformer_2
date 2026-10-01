@@ -85,7 +85,7 @@ static uint8_t StageFromValue(uint16_t v)
    档位 s 的区间是 [kThresh[s], kThresh[s-1])：
      往高档走 -> 要越过上边界 kThresh[cur-1] + HYS
      往低档走 -> 要越过下边界 kThresh[cur]   - HYS            */
-static uint8_t StageFromValueHyst(uint16_t v, uint8_t cur)
+static uint8_t StageFromValueHyst(uint16_t v, uint8_t cur) //v:当前值 cur:上一次的档位
 {
     uint8_t s = StageFromValue(v);
     if (cur == 0xFFU || s == cur) return s;                 /* 首帧 / 没跨档 */
@@ -170,7 +170,7 @@ int main(void)
   HAL_GPIO_WritePin(LED_GPIO_Port, LED_Pin, GPIO_PIN_SET);   /* 先确保灭 */
   HAL_Delay(20);
   OLED_Init();
-  OLED_SetContrast(0x4F);                                    /* 降低对比度省电 */
+  OLED_SetContrast(0x4F); /* 降低对比度省电 */
   HAL_GPIO_WritePin(LED_GPIO_Port, LED_Pin, GPIO_PIN_RESET); /* 亮 */
   HAL_Delay(500);
   HAL_GPIO_WritePin(LED_GPIO_Port, LED_Pin, GPIO_PIN_SET);   /* 灭 */
