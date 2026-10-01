@@ -21,7 +21,6 @@
 #include "adc.h"
 #include "i2c.h"
 #include "gpio.h"
-#include "stm32c0xx_hal.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
