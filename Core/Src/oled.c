@@ -774,3 +774,13 @@ void OLED_PrintString(uint8_t x, uint8_t y, char *str, const Font *font, OLED_Co
     }
   }
 }
+
+/**
+ * @brief 修改OLED对比度
+ * @param contrast 对比度，0x00~0xFF
+ */
+void OLED_SetContrast(uint8_t contrast)
+{
+  OLED_SendCmd(0x81);
+  OLED_SendCmd(contrast);
+}

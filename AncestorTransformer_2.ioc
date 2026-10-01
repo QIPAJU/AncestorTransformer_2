@@ -1,5 +1,5 @@
 #MicroXplorer Configuration settings - do not modify
-ADC1.ContinuousConvMode=ENABLE
+ADC1.ContinuousConvMode=DISABLE
 ADC1.IPParameters=NbrOfConversionFlag,master,SelectedChannel,SamplingTimeCommon1,ContinuousConvMode
 ADC1.NbrOfConversionFlag=0
 ADC1.SamplingTimeCommon1=ADC_SAMPLETIME_160CYCLES_5
